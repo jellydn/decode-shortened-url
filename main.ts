@@ -1,4 +1,5 @@
 import LRUCache from "https://deno.land/x/lru_cache/mod.ts";
+import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 
 // create a LRU cache with max size of 10 items
 const cache = new LRUCache<string, string>(10);
@@ -28,8 +29,24 @@ export async function getRealURL(shortURL: string) {
 
 // Learn more at https://deno.land/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  getRealURL("https://t.co/aARSWrWCYr").then(console.log)
-    .catch(
-      console.error,
-    );
+  serve(async (req: Request) => {
+    const params = new URLSearchParams(req.url.split("?")[1]);
+    const shortenedUrl = params.get("url");
+    // thorw error if no url is provided
+    if (!shortenedUrl) {
+      // return 500 status code with error message
+      return new Response("No url provided", {
+        status: 400,
+      });
+    }
+
+    const url = await getRealURL(shortenedUrl);
+
+    // return json response
+    return new Response(JSON.stringify({ shortenedUrl, url }), {
+      headers: {
+        "content-type": "application/json; charset=UTF-8",
+      },
+    });
+  });
 }
