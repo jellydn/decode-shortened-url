@@ -9,6 +9,17 @@
 
 ## Usage
 
+```sh
+curl 'https://twt-decode-url.productsway.com/?url=https://s.productsway.com/kUDbc9Gg' | jq .
+```
+
+```json
+{
+  "shortenedUrl": "https://s.productsway.com/kUDbc9Gg",
+  "url": "https://productsway.com/"
+}
+```
+
 ### Develop
 
 ```sh
@@ -42,4 +53,3 @@ deno task bench
 [![buymeacoffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/dunghd)
 
 Give a ⭐️ if this project helped you!
-
