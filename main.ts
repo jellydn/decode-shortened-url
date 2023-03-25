@@ -40,13 +40,18 @@ if (import.meta.main) {
       });
     }
 
+    const headers = new Headers({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Content-Type": "application/json; charset=UTF-8",
+    });
+
     const url = await getRealURL(shortenedUrl);
 
     // return json response
     return new Response(JSON.stringify({ shortenedUrl, url }), {
-      headers: {
-        "content-type": "application/json; charset=UTF-8",
-      },
+      headers,
     });
   });
 }
